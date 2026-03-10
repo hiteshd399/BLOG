@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Hitesh D. Thakuri — Frames & Fragments</title>
+<meta name="description" content="Writing about life, cinema, and the beauty of unfinished journeys. By Hitesh D. Thakuri, IT student from Nepal."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+/* ===== RESET ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+
+/* ===== TOKENS ===== */
+:root {
+  --black: #0d0d0d;
+  --off-black: #141414;
+  --dark: #1c1a18;
+  --surface: #211f1c;
+  --border: #2e2b27;
+  --muted: #7a746c;
+  --body: #c8c0b4;
+  --light: #ede8df;
+  --white: #f7f3ed;
+  --amber: #d4a843;
+  --amber-dim: #a07c2c;
+  --red: #c0392b;
+  --serif: 'Lora', 'Georgia', serif;
+  --sans: 'Outfit', sans-serif;
+  --baskerville: 'Libre Baskerville', Georgia, serif;
+  --radius: 4px;
+  --transition: 0.25s ease;
+}
+
+/* ===== BASE ===== */
+body {
+  background: var(--black);
+  color: var(--body);
+  font-family: var(--serif);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--amber-dim); border-radius: 2px; }
+
+/* ===== NAV ===== */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 5vw;
+  background: rgba(13,13,13,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  transition: padding var(--transition);
+}
+.nav-logo {
+  font-family: var(--baskerville);
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--white);
+  letter-spacing: 0.01em;
+}
+.nav-logo span { color: var(--amber); }
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color var(--transition);
+}
+.nav-links a:hover { color: var(--amber); }
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 5vw 8vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 75% 30%, rgba(212,168,67,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 70% at 20% 80%, rgba(192,57,43,0.05) 0%, transparent 60%),
+    linear-gradient(180deg, #0d0d0d 0%, #141210 60%, #0d0d0d 100%);
+}
+
+/* Animated grain */
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: -200%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity: 0.5;
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%,100% { transform: translate(0,0); }
+  10% { transform: translate(-2%,-3%); }
+  20% { transform: translate(3%,2%); }
+  30% { transform: translate(-1%,4%); }
+  40% { transform: translate(2%,-1%); }
+  50% { transform: translate(-3%,1%); }
+  60% { transform: translate(1%,-2%); }
+  70% { transform: translate(-2%,3%); }
+  80% { transform: translate(3%,-3%); }
+  90% { transform: translate(-1%,2%); }
+}
+
+.hero-label {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 1.8rem;
+  opacity: 0;
+  animation: riseIn 0.9s 0.2s cubic-bezier(0.22,1,0.36,1) forwards;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.hero-label::before {
+  content: '';
+  display: inline-block;
+  width: 32px;
+  height: 1px;
+  background: var(--amber);
+}
+
+h1.hero-title {
+  font-family: var(--baskerville);
+  font-size: clamp(2rem, 5.5vw, 5.2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.2rem;
+  opacity: 0;
+  animation: riseIn 1s 0.35s cubic-bezier(0.22,1,0.36,1) forwards;
+  position: relative;
+  z-index: 2;
+}
+h1.hero-title em {
+  font-style: normal;
+  color: var(--white);
+  font-weight: 700;
+}
+
+.hero-sub {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+  color: var(--muted);
+  margin: 1.8rem 0 3rem;
+  max-width: 600px;
+  line-height: 1.6;
+  opacity: 0;
+  animation: riseIn 1s 0.5s cubic-bezier(0.22,1,0.36,1) forwards;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: riseIn 1s 0.65s cubic-bezier(0.22,1,0.36,1) forwards;
+  position: relative;
+  z-index: 2;
+}
+
+.btn {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.85rem 2rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+}
+.btn-amber {
+  background: var(--amber);
+  color: var(--black);
+}
+.btn-amber:hover {
+  background: #e8be5a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(212,168,67,0.25);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--body);
+  border: 1px solid var(--border);
+}
+.btn-outline:hover {
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 3rem;
+  right: 5vw;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  opacity: 0;
+  animation: fadeIn 1s 1.2s forwards;
+}
+.scroll-line {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(to bottom, transparent, var(--amber));
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%,100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+.scroll-text {
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  writing-mode: vertical-rl;
+}
+
+/* ===== DIVIDER ===== */
+.tape-divider {
+  width: 100%;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 0.9rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.tape-inner {
+  display: inline-block;
+  animation: marquee 20s linear infinite;
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--border);
+}
+.tape-inner span { color: var(--amber-dim); margin: 0 1.5rem; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ===== LAYOUT ===== */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 5vw;
+}
+
+section { padding: 7rem 5vw; }
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 2.5rem;
+}
+.section-tag::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--amber);
+  opacity: 0.5;
+}
+
+/* ===== FEATURED POST ===== */
+.featured {
+  background: var(--off-black);
+  border-top: 1px solid var(--border);
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  max-width: 1000px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.featured-img {
+  position: relative;
+  overflow: hidden;
+  min-height: 420px;
+}
+.featured-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease, filter 0.5s;
+  filter: brightness(0.75) sepia(0.2);
+}
+.featured-grid:hover .featured-img img {
+  transform: scale(1.05);
+  filter: brightness(0.85) sepia(0.1);
+}
+.featured-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, transparent 60%, var(--surface));
+  pointer-events: none;
+}
+.featured-badge {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  background: var(--amber);
+  color: var(--black);
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.8rem;
+  border-radius: 2px;
+}
+
+.featured-body {
+  background: var(--surface);
+  padding: 3.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.post-kicker {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 1rem;
+}
+
+.featured-title {
+  font-family: var(--baskerville);
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--white);
+  margin-bottom: 1.2rem;
+}
+
+.featured-excerpt {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--muted);
+  margin-bottom: 2rem;
+  flex-grow: 1;
+}
+
+.read-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--amber);
+  transition: gap var(--transition);
+}
+.read-link:hover { gap: 1rem; }
+.read-link::after { content: '→'; }
+
+/* ===== FULL ARTICLE ===== */
+.article-section {
+  background: var(--black);
+  border-top: 1px solid var(--border);
+}
+
+.article-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 5rem;
+  max-width: 1000px;
+}
+
+.article-header {
+  margin-bottom: 3rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.article-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.meta-tag {
+  font-family: var(--sans);
+  font-size: 0.63rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  border-radius: 2px;
+}
+.tag-essay { background: rgba(212,168,67,0.12); color: var(--amber); }
+.tag-life { background: rgba(192,57,43,0.12); color: #e74c3c; }
+.meta-date {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.article-title {
+  font-family: var(--baskerville);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--white);
+  margin-bottom: 1.2rem;
+}
+
+.article-deck {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* Article body prose */
+.prose { font-size: 1.08rem; line-height: 1.9; color: var(--body); }
+.prose p { margin-bottom: 1.6rem; }
+.prose p:last-child { margin-bottom: 0; }
+
+.prose h3 {
+  font-family: var(--baskerville);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--white);
+  margin: 3rem 0 1.2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--amber);
+  margin: 2.5rem 0;
+  padding: 1.2rem 2rem;
+  background: rgba(212,168,67,0.04);
+  border-radius: 0 4px 4px 0;
+}
+.prose blockquote p {
+  font-family: var(--baskerville);
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--light);
+  margin: 0;
+}
+
+.prose .pull-quote {
+  font-family: var(--baskerville);
+  font-style: italic;
+  font-size: 1.4rem;
+  line-height: 1.55;
+  color: var(--amber);
+  text-align: center;
+  padding: 2.5rem 1rem;
+  margin: 3rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.prose .film-highlight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.2rem 1.5rem;
+  margin: 2rem 0;
+}
+.film-reel { font-size: 1.5rem; flex-shrink: 0; }
+.film-text { font-family: var(--sans); font-size: 0.88rem; color: var(--body); }
+.film-name { color: var(--white); font-weight: 600; }
+
+.prose figure {
+  margin: 2.5rem 0;
+}
+.prose figure img {
+  width: 100%;
+  border-radius: 4px;
+  filter: brightness(0.85) contrast(1.05);
+}
+.prose figcaption {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar { position: sticky; top: 6rem; height: fit-content; }
+
+.sidebar-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.sidebar-heading {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.author-card-inner { text-align: center; }
+.author-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 2px solid var(--amber);
+  margin: 0 auto 1rem;
+  overflow: hidden;
+  background: var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+}
+.author-name {
+  font-family: var(--baskerville);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--white);
+  margin-bottom: 0.4rem;
+}
+.author-bio {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.tag {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--muted);
+  transition: all var(--transition);
+  cursor: pointer;
+}
+.tag:hover { border-color: var(--amber); color: var(--amber); }
+
+.quote-block {
+  font-family: var(--baskerville);
+  font-style: italic;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--light);
+  text-align: center;
+}
+.quote-block::before { content: '"'; font-size: 2rem; color: var(--amber); display: block; line-height: 1; margin-bottom: 0.5rem; }
+.quote-source {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 1rem;
+  display: block;
+}
+
+/* ===== ABOUT SECTION ===== */
+.about-section {
+  background: var(--off-black);
+  border-top: 1px solid var(--border);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+  max-width: 1000px;
+}
+
+.about-eyebrow {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 1.5rem;
+}
+
+.about-heading {
+  font-family: var(--baskerville);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 2rem;
+}
+.about-heading em { font-style: italic; color: var(--amber); }
+
+.about-text {
+  font-size: 1.02rem;
+  line-height: 1.9;
+  color: var(--body);
+}
+.about-text p + p { margin-top: 1.3rem; }
+
+.about-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.fact {
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  transition: border-color var(--transition);
+}
+.fact:hover { border-color: var(--amber-dim); }
+.fact-val {
+  font-family: var(--baskerville);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--amber);
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.fact-label {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.about-visual {
+  position: relative;
+}
+.about-img-frame {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.about-img-frame::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(135deg, var(--amber-dim), transparent 60%);
+  border-radius: 4px;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.4;
+}
+.about-img-inner {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 3rem 2.5rem;
+  text-align: center;
+}
+.big-quote {
+  font-family: var(--baskerville);
+  font-style: italic;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  line-height: 1.65;
+  color: var(--light);
+  margin-bottom: 1.5rem;
+}
+.big-quote-mark {
+  font-size: 5rem;
+  line-height: 0.5;
+  color: var(--amber);
+  font-family: var(--baskerville);
+  display: block;
+  margin-bottom: 1.5rem;
+  opacity: 0.6;
+}
+.quote-attr {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ===== CONNECT ===== */
+.connect-section {
+  background: var(--dark);
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.connect-heading {
+  font-family: var(--baskerville);
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.15;
+  margin-bottom: 1.2rem;
+}
+.connect-heading em { font-style: italic; color: var(--amber); }
+
+.connect-sub {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 460px;
+  margin: 0 auto 3rem;
+  line-height: 1.7;
+}
+
+.social-row {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2.5rem;
+}
+.social-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 40px;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--body);
+  transition: all var(--transition);
+  text-transform: uppercase;
+}
+.social-pill:hover {
+  border-color: var(--amber);
+  color: var(--amber);
+  background: rgba(212,168,67,0.05);
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--black);
+  border-top: 1px solid var(--border);
+  padding: 2.5rem 5vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer-logo {
+  font-family: var(--baskerville);
+  font-style: italic;
+  color: var(--amber);
+  font-size: 1rem;
+}
+.footer-copy {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* scroll-triggered fade */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 860px) {
+  .featured-grid { grid-template-columns: 1fr; }
+  .featured-img { min-height: 240px; }
+  .article-layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; }
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .nav-links { display: none; }
+}
+@media (max-width: 560px) {
+  .about-facts { grid-template-columns: 1fr 1fr; }
+  section { padding: 5rem 5vw; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Hitesh D. <span>Thakuri</span></div>
+  <ul class="nav-links">
+    <li><a href="#post">The Essay</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#connect">Connect</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <p class="hero-label">Frames &amp; Fragments — A Personal Blog</p>
+  <h1 class="hero-title">Life, Cinema &amp; Everything In Between.</h1>
+  <p class="hero-sub">An IT student from Nepal writing about the beautiful mess of growing up, college days, lockdown, and a deep love for cinema.</p>
+  <div class="hero-actions">
+    <a href="#post" class="btn btn-amber">Read the Essay</a>
+    <a href="#about" class="btn btn-outline">About Hitesh</a>
+  </div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    <span class="scroll-text">Scroll</span>
+  </div>
+</section>
+
+<!-- TICKER TAPE -->
+<div class="tape-divider" aria-hidden="true">
+  <span class="tape-inner">
+    Life &amp; Philosophy <span>✦</span> Cinema <span>✦</span> Biratnagar to the World <span>✦</span> There Will Be Blood <span>✦</span> College Days <span>✦</span> Lockdown Stories <span>✦</span> IT Student <span>✦</span> Nepal <span>✦</span> Personal Essays <span>✦</span>
+    Life &amp; Philosophy <span>✦</span> Cinema <span>✦</span> Biratnagar to the World <span>✦</span> There Will Be Blood <span>✦</span> College Days <span>✦</span> Lockdown Stories <span>✦</span> IT Student <span>✦</span> Nepal <span>✦</span> Personal Essays <span>✦</span>
+  </span>
+</div>
+
+<!-- FEATURED -->
+<section class="featured" id="post">
+  <div class="container">
+    <p class="section-tag reveal">Featured Essay</p>
+    <div class="featured-grid reveal">
+      <div class="featured-img">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjAzNwUbYWaUlYHHhUmDx7AZQrXG8-1IUEvrFbtjVDRngMSdvtD3wXx8BQJ0qvrg4SELKdk7v7c5PADa9pmpKawYs-91_3BdgBsO96z80PpZrWoGnDzLLgIHx1GehwRy2VV2JygLAaL_0IzydK1M6UATdeQR0duZVDl2Q0wdM-6nemjgud5iYFFdA5lgfI/s320/1378807-2560x1994-desktop-hd-movie-set-wallpaper-image.jpg" alt="Cinema"/>
+        <div class="featured-img-overlay"></div>
+        <div class="featured-badge">Latest Post</div>
+      </div>
+      <div class="featured-body">
+        <p class="post-kicker">Essay · July 2025</p>
+        <h2 class="featured-title">The Beauty of the Unfinished Journey</h2>
+        <p class="featured-excerpt">"Life is not a problem to be solved, but an experience to be lived. The search itself is the meaning." — A reflection for those who feel lost, yet keep walking.</p>
+        <a class="read-link" href="#full-essay">Read Full Essay</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FULL ARTICLE -->
+<section class="article-section" id="full-essay">
+  <div class="container">
+    <p class="section-tag reveal">Full Read</p>
+    <div class="article-layout">
+
+      <!-- MAIN CONTENT -->
+      <article>
+        <header class="article-header reveal">
+          <div class="article-meta">
+            <span class="meta-tag tag-essay">Essay</span>
+            <span class="meta-tag tag-life">Life</span>
+            <span class="meta-date">July 30, 2025 · 6 min read</span>
+          </div>
+          <h2 class="article-title">The Beauty of the Unfinished Journey</h2>
+          <p class="article-deck">A Reflection for Those Who Feel Lost, Yet Keep Walking — on purpose, cinema, and what it means to still be becoming.</p>
+        </header>
+
+        <div class="prose">
+
+          <figure class="reveal">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEge6zq4ybRfLnr1ikVzu8cRF5s3CAdsK_55PnFmPy8Jo7N690foHXOoYydYBOOlQbl-AbHyp7hT7i2AaPx3vaziRXaD_Izswg48wQtBkHG3XaBBnTthv_9m7eS4v_LUd_9O16PybzQvwi3vhKDbg3cnM_pwAxBQIX6E0qZXQjEhnTSH84R43RqUcdFe4R0/s320/5817850-2920x1640-desktop-hd-motivational-background.jpg" alt="Unfinished Journey"/>
+            <figcaption>On the road — still walking, still becoming.</figcaption>
+          </figure>
+
+          <p class="reveal">As an IT student, I'm trained to think in binaries — right or wrong, true or false, success or failure. But life doesn't operate in clean logic. It's messy, unpredictable, and often illogical. We build systems, create routines, and try to impose order on chaos, only to realize that the most profound moments come from the things we can't control. The unexpected friendships. The failures that redirect us.</p>
+
+          <blockquote class="reveal">
+            <p>Life is not a problem to be solved, but an experience to be lived. We spend so much of our time chasing answers — What is my purpose? Why do I exist? What is the right path? — that we forget the simple truth: the search itself is the meaning.</p>
+          </blockquote>
+
+          <p class="reveal">We're taught that purpose is a singular, grand destination — a career, a mission, a legacy. But what if purpose isn't something we find, but something we cultivate through daily choices? A doctor saves lives, but so does the stranger who listens to a friend in despair. A scientist discovers new worlds, but so does the child who gazes at the stars for the first time.</p>
+
+          <p class="reveal">Purpose isn't a fixed point. It's fluid, evolving as we do. It's in the small acts — showing up, paying attention, choosing kindness even when it costs us something. The myth of a single, grand purpose can paralyze us, making us feel like we're failing if we haven't "figured it out" by a certain age. But what if the real purpose was never about achieving something external, but about becoming someone who adds value to the world, in whatever form that takes?</p>
+
+          <p class="pull-quote reveal">"The people who inspire us the most aren't the ones who had everything figured out — but the ones who kept moving forward despite their doubts."</p>
+
+          <p class="reveal">We're obsessed with completion — finishing degrees, securing jobs, checking off life milestones. But what if the most important parts of life are the unfinished ones? The dreams we haven't yet pursued, the questions we haven't answered, the person we're still becoming?</p>
+
+          <p class="reveal">There's a certain grace in accepting that we may never have all the answers. That life isn't a puzzle to be solved, but a story to be written — one imperfect, uncertain chapter at a time.</p>
+
+          <h3 class="reveal">Growing Up in Biratnagar — and How Cinema Became My First Friend</h3>
+
+          <figure class="reveal">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7DirqTUeq2Jy0hYR62SK2gxF5pQjVR0KHSZ8qrFKdzl2DlTLxPsZFpGS5l5k_be20OF7FWizgijzeZ2ujxaEhkcQ-UmpSxw3zceCcCOCFvxAa5-8N3Xwbd01u-sdSOVoKVn2Sy6lTkV8cwSef2zzdV6HbZigTZ7bROOGhG8mAonuWY4YzcVl3_ckMm5I/s563/0bc3859a74b43f61db8e6c1b2e581bea.jpg" alt="Cinema love" onerror="this.style.display='none'"/>
+            <figcaption>The flicker that changed everything.</figcaption>
+          </figure>
+
+          <p class="reveal">Growing up in Biratnagar until I was 19, I felt invisible — no friends, just the crushing weight of isolation that only deepened during lockdown, trapping me in a suffocating loop of loneliness. Until I discovered my lifelines: movies and music.</p>
+
+          <p class="reveal">Films, especially Western cinema, became my sanctuary. My first true friends. And <em>There Will Be Blood</em> struck me like lightning — not just for its story, but for Daniel Day-Lewis's volcanic performance that laid bare the raw nerves of human obsession.</p>
+
+          <div class="film-highlight reveal">
+            <span class="film-reel">🎬</span>
+            <div class="film-text">
+              <span class="film-name">There Will Be Blood (2007)</span><br/>
+              Dir. Paul Thomas Anderson — the film that changed how I understood ambition, isolation, and what it means to be consumed by something.
+            </div>
+          </div>
+
+          <p class="reveal">In that darkness, cinema gave me what real life couldn't: a mirror for my own unspoken rage and longing, proof that art could articulate emotions I'd never been able to name. Those flickering images and haunting scores didn't just distract me — they <em>resurrected</em> me, teaching me that even in solitude, I was witnessing something profound about the human condition.</p>
+
+          <blockquote class="reveal">
+            <p>Now, every rewatch feels like visiting an old savior — a reminder that stories can be oxygen when the world refuses to breathe with you.</p>
+          </blockquote>
+
+          <h3 class="reveal">What Cinema Taught Me</h3>
+
+          <figure class="reveal">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjAzNwUbYWaUlYHHhUmDx7AZQrXG8-1IUEvrFbtjVDRngMSdvtD3wXx8BQJ0qvrg4SELKdk7v7c5PADa9pmpKawYs-91_3BdgBsO96z80PpZrWoGnDzLLgIHx1GehwRy2VV2JygLAaL_0IzydK1M6UATdeQR0duZVDl2Q0wdM-6nemjgud5iYFFdA5lgfI/s320/1378807-2560x1994-desktop-hd-movie-set-wallpaper-image.jpg" alt="Movie set"/>
+            <figcaption>Behind the lens — the craft of filmmaking as a way of seeing.</figcaption>
+          </figure>
+
+          <p class="reveal">Cinema is far more than just a source of entertainment — it's a profound reflection of the human experience that teaches us invaluable lessons about life. Every time we lose ourselves in a great film, we're not just escaping reality; we're engaging with perspectives and emotions that shape how we see the world.</p>
+
+          <p class="reveal">Movies show us that everyone — from the protagonist to the seemingly insignificant side character — has a complex inner world worth understanding. Some of cinema's most powerful moments happen without words, proving that silence often carries more weight than dialogue.</p>
+
+          <p class="reveal">Films expand our worldview, transporting us to places and situations we'd never encounter otherwise, putting our own struggles into perspective. Perhaps most importantly, movies demonstrate that real love and connection aren't about grand gestures, but about the small, consistent choices that bond people together.</p>
+
+          <p class="pull-quote reveal">"What began as escape has become my compass — because the right film at the right time doesn't just entertain; it whispers, 'You are not alone,' and that changes everything."</p>
+
+          <p class="reveal">The magic of cinema lies in its ability to show us life's complexities in a condensed, meaningful way — giving us not just stories, but mirrors that help us understand ourselves and others more deeply. What makes films truly special is that while they have endings, our lives keep unfolding. And like the best movie characters, we're all still writing our stories, one day at a time.</p>
+
+        </div>
+      </article>
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="sidebar-card reveal">
+          <div class="sidebar-heading">About the Author</div>
+          <div class="author-card-inner">
+            <div class="author-avatar">🎬</div>
+            <div class="author-name">Hitesh D. Thakuri</div>
+            <p class="author-bio" style="margin-top:0.6rem">IT student from Nepal. Writing about life, cinema, and everything in between. Based in Biratnagar.</p>
+          </div>
+        </div>
+
+        <div class="sidebar-card reveal">
+          <div class="sidebar-heading">Topics</div>
+          <div class="tag-cloud">
+            <span class="tag">Cinema</span>
+            <span class="tag">Life</span>
+            <span class="tag">Lockdown</span>
+            <span class="tag">Philosophy</span>
+            <span class="tag">Nepal</span>
+            <span class="tag">IT Student</span>
+            <span class="tag">Films</span>
+            <span class="tag">Personal</span>
+          </div>
+        </div>
+
+        <div class="sidebar-card reveal">
+          <div class="sidebar-heading">A Favourite Quote</div>
+          <div class="quote-block">
+            Stories can be oxygen when the world refuses to breathe with you.
+            <span class="quote-source">— Hitesh D. Thakuri</span>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <p class="about-eyebrow reveal">About Me</p>
+        <h2 class="about-heading reveal">An IT student who<br/><em>thinks in stories.</em></h2>
+        <div class="about-text reveal">
+          <p>I'm Hitesh D. Thakuri — from Biratnagar, Nepal. Trained in code, but drawn to the chaos and beauty of being human. I started writing because logic alone was never enough to explain what I was feeling.</p>
+          <p>Growing up without many friends, lockdown hit differently for me. Films became my companions — my education in emotion, empathy, and what it means to be alive. Cinema didn't just entertain me. It made me who I am.</p>
+          <p>This blog is where I put into words everything I couldn't say out loud: the philosophy of an unfinished life, the love of great movies, and the slow, beautiful process of becoming.</p>
+        </div>
+        <div class="about-facts reveal">
+          <div class="fact">
+            <div class="fact-val">NP</div>
+            <div class="fact-label">Nepal</div>
+          </div>
+          <div class="fact">
+            <div class="fact-val">IT</div>
+            <div class="fact-label">Student</div>
+          </div>
+          <div class="fact">
+            <div class="fact-val">∞</div>
+            <div class="fact-label">Films Watched</div>
+          </div>
+          <div class="fact">
+            <div class="fact-val">'24</div>
+            <div class="fact-label">Writing Since</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-visual reveal">
+        <div class="about-img-frame">
+          <div class="about-img-inner">
+            <span class="big-quote-mark">"</span>
+            <p class="big-quote">I cannot imagine my life without this craft called filmmaking. Cinema gave me what real life couldn't — a mirror for my own unspoken rage and longing.</p>
+            <span class="quote-attr">— Hitesh D. Thakuri, 2025</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONNECT -->
+<section class="connect-section" id="connect">
+  <div class="container">
+    <p class="section-tag reveal" style="justify-content:center">Let's Connect</p>
+    <h2 class="connect-heading reveal">Read more.<br/><em>Talk films.</em></h2>
+    <p class="connect-sub reveal">If this resonated with you — about life, about movies, about feeling lost but walking anyway — come find me.</p>
+    <a href="https://hiteshdthakuri.blogspot.com" target="_blank" class="btn btn-amber reveal">Visit My Full Blog →</a>
+    <div class="social-row reveal">
+      <a href="https://hiteshdthakuri.blogspot.com" target="_blank" class="social-pill">📖 Blog</a>
+      <a href="#top" class="social-pill">📸 Instagram</a>
+      <a href="#top" class="social-pill">✉️ Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Hitesh D. Thakuri</div>
+  <div class="footer-copy">Frames &amp; Fragments · Nepal · 2024 – present</div>
+  <div class="footer-copy">Life &amp; Cinema</div>
+</footer>
+
+<!-- SCROLL REVEAL JS -->
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
